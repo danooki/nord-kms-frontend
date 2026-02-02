@@ -1,0 +1,12 @@
+# Render Configuration for Frontend
+# Place this file in your frontend repository root
+
+services:
+  - type: web
+    name: nordiko-kms-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false  # Set this to your backend URL in Render dashboard
