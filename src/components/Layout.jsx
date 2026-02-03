@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Layout({ children }) {
   const location = useLocation();
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, isAdmin, isEditor, isRegistered } = useAuth();
 
   const isActive = (path) => location.pathname === path;
 
@@ -49,12 +49,27 @@ export default function Layout({ children }) {
                     Tickets
                   </Link>
                 )}
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                      isActive('/admin')
+                        ? 'border-blue-500 text-gray-900'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }`}
+                  >
+                    Admin
+                  </Link>
+                )}
               </div>
             </div>
             <div className="flex items-center">
               {isAuthenticated ? (
                 <div className="flex items-center space-x-4">
-                  <span className="text-sm text-gray-700">{user?.email}</span>
+                  <div className="text-right">
+                    <div className="text-sm font-medium text-gray-900">{user?.email}</div>
+                    <div className="text-xs text-gray-500 capitalize">{user?.role}</div>
+                  </div>
                   <button
                     onClick={logout}
                     className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm font-medium"

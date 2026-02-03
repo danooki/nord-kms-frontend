@@ -2,6 +2,15 @@
 
 React-based frontend application for the Nordiko Knowledge Management System.
 
+## Quick Start
+
+```bash
+npm install
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`
+
 ## Tech Stack
 
 - **React 18** - UI library
@@ -10,82 +19,41 @@ React-based frontend application for the Nordiko Knowledge Management System.
 - **Tailwind CSS** - Utility-first CSS framework
 - **Axios** - HTTP client
 
-## Getting Started
+## Environment Variables
 
-### Prerequisites
-
-- Node.js 18+ and npm
-
-### Installation
+Create a `.env` file:
 
 ```bash
-cd client
-npm install
+VITE_API_URL=http://localhost:3000
 ```
-
-### Development
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-The app will be available at `http://localhost:5173`
-
-### Environment Variables
-
-Create a `.env` file in the `client` directory:
-
-```bash
-cp .env.example .env
-```
-
-Available variables:
-- `VITE_API_URL` - Backend API URL (default: `http://localhost:3000`)
 
 **Note:** In development, Vite automatically proxies `/api` requests to the backend, so `VITE_API_URL` is mainly for production builds.
 
-### Building for Production
+## Available Scripts
 
-```bash
-npm run build
-```
-
-The production build will be in the `dist/` directory.
-
-Preview the production build:
-
-```bash
-npm run preview
-```
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
 
 ## Project Structure
 
 ```
-client/
-├── src/
-│   ├── components/     # Reusable React components
-│   ├── pages/          # Page components
-│   ├── context/        # React context providers
-│   ├── config/         # Configuration files
-│   ├── App.jsx         # Main app component
-│   └── main.jsx        # Entry point
-├── index.html          # HTML template
-├── vite.config.js      # Vite configuration
-└── tailwind.config.js  # Tailwind CSS configuration
+src/
+├── components/     # Reusable React components (Layout, ProtectedRoute)
+├── pages/          # Page components (Wiki, Tickets, Chatbot, Login, Admin, Dashboard)
+├── context/        # React context providers (AuthContext)
+├── config/         # Configuration files (API client)
+├── App.jsx         # Main app component
+└── main.jsx        # Entry point
 ```
 
 ## Features
 
-- **Authentication** - Login and protected routes
+- **Authentication** - Login, registration, and protected routes
+- **RBAC** - Role-based access control with automatic dashboard redirects
 - **Wiki** - Knowledge base article browsing
 - **Tickets** - Support ticket management
 - **Chatbot** - AI-powered Q&A interface
+- **Admin Dashboard** - User management and system administration
 
-## Development Notes
-
-- The app uses React Router for client-side routing
-- API calls are handled through Axios with interceptors for authentication
-- Tailwind CSS is used for styling
-- Environment variables must be prefixed with `VITE_` to be accessible in the app
+For complete documentation, see the main [README.md](../README.md) and [ARCHITECTURE.md](../ARCHITECTURE.md).
