@@ -45,6 +45,13 @@ export function AuthProvider({ children }) {
       setUser(user);
       return { success: true };
     } catch (error) {
+      // Handle connection errors
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('ERR_CONNECTION_REFUSED')) {
+        return {
+          success: false,
+          error: 'Cannot connect to server. Please make sure the backend server is running on port 3000.'
+        };
+      }
       return {
         success: false,
         error: error.response?.data?.error || 'Login failed'
@@ -60,6 +67,13 @@ export function AuthProvider({ children }) {
       setUser(user);
       return { success: true };
     } catch (error) {
+      // Handle connection errors
+      if (error.code === 'ERR_NETWORK' || error.message?.includes('ERR_CONNECTION_REFUSED')) {
+        return {
+          success: false,
+          error: 'Cannot connect to server. Please make sure the backend server is running on port 3000.'
+        };
+      }
       return {
         success: false,
         error: error.response?.data?.error || 'Registration failed'
@@ -72,15 +86,40 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  // Authentication check
+  const isAuthenticated = !!user;
+
+  // Role-based helper functions
+  const isAdmin = user?.role === 'admin';
+  const isEditor = user?.role === 'editor';
+  const isRegistered = user?.role === 'registered';
+  const isPublic = !user; // Public users are not authenticated
+
+  // Permission checks
+  const canManageUsers = isAdmin;
+  const canEditWiki = isAdmin || isEditor;
+  const canAnswerTickets = isAdmin || isEditor;
+  const canViewPrivateWiki = isAuthenticated; // Any authenticated user can view private content
+  const canOpenTickets = isAuthenticated; // Any authenticated user can open tickets
+
   const value = {
     user,
     loading,
     login,
     register,
     logout,
-    isAuthenticated: !!user,
-    isPublic: !user || user.role === 'public',
-    isRegistered: user && (user.role === 'registered' || user.role === 'seller')
+    isAuthenticated,
+    // Role checks
+    isAdmin,
+    isEditor,
+    isRegistered,
+    isPublic,
+    // Permission checks
+    canManageUsers,
+    canEditWiki,
+    canAnswerTickets,
+    canViewPrivateWiki,
+    canOpenTickets
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

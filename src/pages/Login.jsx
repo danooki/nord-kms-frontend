@@ -22,7 +22,7 @@ export default function Login() {
         : await register(email, password);
 
       if (result.success) {
-        navigate('/wiki');
+        navigate('/dashboard');
       } else {
         setError(result.error);
       }
@@ -38,7 +38,7 @@ export default function Login() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {isLogin ? 'Sign in to your account' : 'Create a new account'}
+            {isLogin ? 'Login to your account' : 'Register a new account'}
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -88,7 +88,7 @@ export default function Login() {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
             >
-              {loading ? 'Processing...' : isLogin ? 'Sign in' : 'Sign up'}
+              {loading ? 'Processing...' : isLogin ? 'Login' : 'Register'}
             </button>
           </div>
 
@@ -102,8 +102,8 @@ export default function Login() {
               className="text-sm text-blue-600 hover:text-blue-500"
             >
               {isLogin
-                ? "Don't have an account? Sign up"
-                : 'Already have an account? Sign in'}
+                ? "Don't have an account? Register"
+                : 'Already have an account? Login'}
             </button>
           </div>
         </form>
